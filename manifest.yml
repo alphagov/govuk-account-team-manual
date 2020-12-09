@@ -1,0 +1,6 @@
+---
+applications:
+- name: govuk-account-team-manual
+  memory: 64M
+  buildpacks:
+  - staticfile_buildpack
