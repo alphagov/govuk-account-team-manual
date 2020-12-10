@@ -1,0 +1,266 @@
+---
+title: Resolve issues with GOV.UK Accounts
+weight: 32
+last_reviewed_on: 2020-12-10
+review_in: 6 months
+---
+
+# Resolve issues with GOV.UK Accounts
+
+If you are the on-call support developer, you may receive an alert if
+there is a problem with GOV.UK Accounts.  The Senior Management Team
+(SMT) may also contact you if you need to scale up GOV.UK Accounts at
+short notice.
+
+This content covers the reasons you may get called and what to do in
+each case.
+
+## Prerequisites
+
+Before going on call, make sure you have access to everything you
+might need and know where our code is.
+
+### Get access to the GOV.UK PaaS
+
+1. Sign up to the [London PaaS instance][paas].
+
+2. Ask `#govuk-accounts-tech` to give you the [space developer
+   role][paas-permissions] in the "production" space for the
+   "govuk-accounts" organisation.
+
+3. Set up the [Cloud Foundry CLI][cf-cli].
+
+4. Check you can log in to the PaaS space:
+
+   ```
+   $ cf login -a api.london.cloud.service.gov.uk --sso
+   ```
+
+[cf-cli]: https://docs.cloud.service.gov.uk/get_started.html#set-up-the-cloud-foundry-command-line
+[paas]: https://admin.london.cloud.service.gov.uk
+[paas-permissions]: https://docs.cloud.service.gov.uk/orgs_spaces_users.html#space-developer
+
+### Repositories
+
+The following sections contain information on our repositories.
+
+#### GOV.UK Account Manager Prototype
+
+[GitHub repository][repo-account-manager].
+
+Handles user interactions with accounts (e.g. logging in, signing up,
+brokering attribute store data, seeing "their dashboard").
+
+#### GOV.UK Attribute Service Prototype
+
+[GitHub repository][repo-attribute-service].
+
+A key-value store for user attributes (currently just their checker
+answers).
+
+#### GOV.UK Accounts Architecture
+
+[GitHub repository][repo-architecture].
+
+We've made some notes on how the system architecture works here.
+
+#### GOV.UK Accounts Tech Docs
+
+[GitHub repository][repo-docs].
+
+We have some under-development tech docs over here.
+
+#### GOV.UK Docker
+
+[GitHub repository][repo-govuk-docker].
+
+You can spin up a local development version of the account system,
+including the transition checker integration, with the latest GOV.UK
+Docker.
+
+[repo-account-manager]: https://github.com/alphagov/govuk-account-manager-prototype/
+[repo-architecture]: https://github.com/alphagov/govuk-account-architecture/
+[repo-attribute-service]: https://github.com/alphagov/govuk-attribute-service-prototype/
+[repo-docs]: https://github.com/alphagov/govuk-account-tech-docs
+[repo-govuk-docker]: https://github.com/alphagov/govuk-docker/
+
+## Diagnosing the problem
+
+Try to determine which app is having issues and what the nature of the
+problem is:
+
+1. Check for `govuk-account-manager` and `govuk-attribute-service`
+   errors in [Sentry][sentry] (also sent to `#govuk-accounts-tech`).
+
+2. Connect to the office VPN and check the metrics in
+   [Grafana][grafana].
+
+The apps communicate, so a problem in one could cascade to the other.
+
+[grafana]: https://grafana-paas.cloudapps.digital/d/_g_9aRoMk/gov-uk-accounts
+[sentry]: https://sentry.io/govuk
+
+## Solving the problem
+
+GOV.UK Accounts is still part of GOV.UK, so make sure to follow the
+[main incident guidance][incident], in addition to diagnosing and
+fixing any accounts-specific issue.
+
+[incident]: https://docs.publishing.service.gov.uk/manual/incident-what-to-do.html
+
+### There's a problem with the PaaS
+
+If the problem is with the PaaS itself (for example, requests aren't
+even making it to the app, despite the app being healthy), you can
+escalate the issue to the PaaS on-call support.
+
+*See [the PaaS support page][paas-support] and [rota][paas-rota].*
+
+[paas-support]: https://admin.cloud.service.gov.uk/support
+[paas-rota]: https://rotas.cloudapps.digital/
+
+### Someone is attacking us
+
+*See the section on security incidents in the [main incident
+guidance][incident].*
+
+### An app is unable to keep up with the volume of requests
+
+If an app is receiving more requests than it can handle, you can scale
+that app up by:
+
+- changing the deployment pipeline
+- using the Cloud Foundry CLI
+
+If you are adding more then 50GiB of RAM then please let PaaS know (in
+`#paas`) as they may need to scale to accommodate our new usage.
+
+*See also [notes on continuous deployment](#notes-on-continuous-deployment).*
+
+#### Change the deployment pipeline
+
+You change the deployment pipeline by editing the
+`concourse/pipeline.yml` file.
+
+See the [example pull request][example-pr] for more information.
+
+[example-pr]: https://github.com/alphagov/govuk-account-manager-prototype/pull/464
+
+#### Using the Cloud Foundry CLI
+
+Run the following commands:
+
+```
+$ cf scale -i <number of app instances> <app name>
+$ cf scale --process worker -i <number of worker instances> <app name>
+```
+
+The `<app name>` is either `govuk-account-manager` or
+`govuk-attribute-service`.
+
+### Postgres or Redis is unable to keep up
+
+We have one Redis instance, used by the Account Manager, and two
+Postgres instances, one for each app.
+
+You can list them by running
+
+```
+$ cf services
+```
+
+If one of these needs to scale up, for example:
+
+- New Sidekiq jobs cannot be enqueued because Redis is out of memory
+- New users or attributes cannot be stored because Postgres is out of disk space
+
+You can do so with
+
+```
+$ cf update-service <service name> -p <plan name>
+```
+
+To list all plans, run `cf marketplace`.
+
+*See the PaaS docs on [scaling Postgres][scale-postgres] and [scaling
+Redis][scale-redis].*
+
+[scale-postgres]: https://docs.cloud.service.gov.uk/deploying_services/postgresql/#upgrade-postgresql-service-plan
+[scale-redis]: https://docs.cloud.service.gov.uk/deploying_services/redis/#upgrade-redis-service-plan
+
+### There is a bug in the code
+
+If there are a large number of Sentry errors, there may be a bug in
+the code which has suddenly reared its head (for example, maybe it
+only happens on certain pages, and a link to such a page has been
+tweeted).
+
+If you can track down the bug and fix it, please do!
+
+*See also [notes on continuous deployment](#notes-on-continuous-deployment).*
+
+## Nuclear options
+
+### I need to switch off the Account Manager entirely
+
+We don't currently have an easy way to do this!
+
+But if you do switch it off, also switch off the Transition Checker
+integration, to prevent errors in finder-frontend.
+
+### I need to switch off the Transition Checker integration entirely
+
+The accounts functionality on GOV.UK is enabled by two feature flags,
+set in puppet.
+
+Set these to false to disable the integration:
+
+```yaml
+govuk::apps::collections::feature_flag_accounts: false
+govuk::apps::finder_frontend::feature_flag_accounts: false
+```
+
+Then deploy Puppet.
+
+You can manually run Puppet on all the `frontend` and
+`calculators_frontend` machines if you don't want to wait for the
+normal run:
+
+```bash
+GOVUK_ENV=production
+
+for GOVUK_CLASS in frontend calculators_frontend; do
+  n=0
+  for node in $(gds govuk connect ssh -e "$GOVUK_ENV" aws/jumpbox -- govuk_node_list -c "$GOVUK_CLASS"); do
+    n=$((n+1))
+    gds govuk connect ssh -e "$GOVUK_ENV" "aws/${GOVUK_CLASS}:${n}" -- govuk_puppet --verbose
+  done
+done
+```
+
+## Notes on continuous deployment
+
+Our applications are continuously deployed via [Concourse][cd]:
+
+- [`govuk-account-manager-prototype` pipeline][cd-account-manager]
+- [`govuk-attribute-service-prototype` pipeline][cd-attribute-service]
+
+The pipelines both deploy code and also scale the app.  This means
+that:
+
+- if you make a code change, that change will deploy automatically
+  after being merged
+
+- if you scale the app by editing the pipeline, that change will
+  automatically deploy after being merged
+
+- if you scale the app through the Cloud Foundry CLI, the app will
+  scale back down when the next deployment happens.
+
+You can disable automatic deployments by pausing the relevant pipeline
+by clicking the pause button in the top-right corner (next to your
+username).  A paused pipeline turns blue.
+
+[cd]: https://cd.gds-reliability.engineering
+[cd-account-manager]: https://cd.gds-reliability.engineering/teams/govuk-tools/pipelines/govuk-account-manager-prototype
+[cd-attribute-service]: https://cd.gds-reliability.engineering/teams/govuk-tools/pipelines/govuk-attribute-service-prototype
