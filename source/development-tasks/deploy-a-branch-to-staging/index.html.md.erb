@@ -81,22 +81,24 @@ If the branch you want to deploy is on your machine instead of GitHub, you can d
     fly -t cd-govuk-tools pause-job --job govuk-account-manager-prototype/deploy-app-staging
     ```
 
-3. Log in to CloudFoundry:
+3. Sign in to staging.
 
-    ```
-    cf login -a api.london.cloud.service.gov.uk --sso -o govuk-accounts -s staging
-    ```
-
-    When you are logged in, select the staging space:
+    If you are already signed in to CloudFoundry:
 
     ```
     cf target -s staging
     ```
 
+    If you are not already signed in to CloudFoundry:
+
+    ```
+    cf login -a api.london.cloud.service.gov.uk --sso -o govuk-accounts -s staging
+    ```
+
 4. Push your branch to staging:
 
     ```
-    git checkout ...
+    git checkout <branch-name>
     cf push
     ```
 
