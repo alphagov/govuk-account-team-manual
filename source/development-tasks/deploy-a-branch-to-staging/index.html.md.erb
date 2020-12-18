@@ -1,0 +1,121 @@
+---
+title: Deploy a branch to staging
+weight: 41
+last_reviewed_on: 2020-12-18
+review_in: 6 months
+---
+
+# Deploy a branch to staging
+
+When making large changes it can be useful to deploy a branch to staging:
+
+- so non-developers can see and interact with the apps
+- to test integrations with other systems
+
+## Deploy a branch from GitHub
+
+If the branch you want to deploy is on GitHub, use the existing Concourse pipeline to continuously deploy that branch to staging.
+
+1. Sign in to Concourse:
+
+    ```
+    fly -t cd-govuk-tools login
+    ```
+
+2. Disable deployments to production:
+
+    ```
+    fly -t cd-govuk-tools pause-job --job govuk-account-manager-prototype/deploy-app-production
+    ```
+
+3. Disable automatic pipeline updates:
+
+    ```
+    fly -t cd-govuk-tools pause-job --job govuk-account-manager-prototype/update-pipeline
+    ```
+
+4. Edit `concourse/pipeline.yml` and fill in the name of your branch for the `git-main` resource.
+
+5. Deploy your pipeline change:
+
+    ```
+    fly -t cd-govuk-tools set-pipeline -p govuk-account-manager-prototype -c concourse/pipeline.yml
+    ```
+
+6. Wait for Concourse to test and deploy your branch.
+
+To revert this change:
+
+1. Enable automatic pipeline updates:
+
+    ```
+    fly -t cd-govuk-tools unpause-job --job govuk-account-manager-prototype/update-pipeline
+    ```
+
+2. Trigger a pipeline update and wait for it to complete:
+
+    ```
+    fly --target cd-govuk-tools trigger-job --job govuk-account-manager-prototype/update-pipeline --watch
+    ```
+
+3. Enable deployments to production:
+
+    ```
+    fly -t cd-govuk-tools unpause-job --job govuk-account-manager-prototype/deploy-app-production
+    ```
+
+
+## Deploy a branch from your machine
+
+If the branch you want to deploy is on your machine instead of GitHub, you can deploy that branch with the CloudFoundry CLI.
+
+1. Sign in to Concourse:
+
+    ```
+    fly -t cd-govuk-tools login
+    ```
+
+2. Disable deployments to staging:
+
+    ```
+    fly -t cd-govuk-tools pause-job --job govuk-account-manager-prototype/deploy-app-staging
+    ```
+
+3. Sign in to staging.
+
+    If you are already signed in to CloudFoundry:
+
+    ```
+    cf target -s staging
+    ```
+
+    If you are not already signed in to CloudFoundry:
+
+    ```
+    cf login -a api.london.cloud.service.gov.uk --sso -o govuk-accounts -s staging
+    ```
+
+4. Push your branch to staging:
+
+    ```
+    git checkout <branch-name>
+    cf push
+    ```
+
+This is not a rolling deployment, so it may trigger some failures as app instances restart.
+
+To revert this change:
+
+1. Enable deployments to staging:
+
+    ```
+    fly -t cd-govuk-tools unpause-job --job govuk-account-manager-prototype/deploy-app-staging
+    ```
+
+2. Trigger a deployment:
+
+    ```
+    fly --target cd-govuk-tools trigger-job --job govuk-account-manager-prototype/deploy-app-staging
+    ```
+
+    There is no need to wait for this to complete, as there is no risk of the branch being deployed to production.
