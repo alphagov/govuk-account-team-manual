@@ -1,18 +1,17 @@
 ---
 title: Send an email to all GOV.UK Account users
-weight: 32
+weight: 33
 last_reviewed_on: 2020-12-23
 review_in: 6 months
 ---
 
 # Send an email to all GOV.UK Account users
 
-Sometimes it may be necessary to email all GOV.UK Account users, e.g.
-after a request from the Senior Management Team (SMT).
+Sometimes you may need to email all GOV.UK Account users. For example, after a request from the Senior Management Team (SMT).
 
 ## Send an email
 
-1. Sign in to production
+1. Sign in to production.
 
     If you are already signed in to CloudFoundry:
 
@@ -26,32 +25,39 @@ after a request from the Senior Management Team (SMT).
     cf login -a api.london.cloud.service.gov.uk --sso -o govuk-accounts -s production
     ```
 
-2. SSH into a production machine
+2. SSH into a production machine:
 
     ```
     cf ssh govuk-account-manager
     ```
 
-2. Load the application environment
+2. Load the application environment:
 
     ```
     $ /tmp/lifecycle/shell
     ```
 
-3. Open a Rails console
+3. Open a [Ruby on Rails](https://rubyonrails.org/) console:
 
     ```
     $ rails c
     ```
 
-4. Assign the email subject and content to variables
+4. Assign the email subject and content to variables:
+
+    ```
+    subject = "<email-subject-line>"
+    body = "<email-body-text>"
+    ```
+
+    For example:
 
     ```
     subject = "Important changes to your GOV.UK Account"
     body = "You must perform an action"
     ```
 
-5. Trigger an email to all account users
+5. Trigger an email to all account users:
 
     ```
     User.all.each do |user|
