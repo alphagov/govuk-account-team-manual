@@ -1,0 +1,136 @@
+---
+title: Suspend and resume GOV.UK Account
+weight: 34
+last_reviewed_on: 2020-12-30
+review_in: 6 months
+---
+
+#  Suspend and resume GOV.UK Account
+
+You can suspend and resume GOV.UK Account. When you suspend GOV.UK Account, the following happens with immediate effect:
+
+- new users are not be able to sign up for GOV.UK Account
+- users can no longer access their accounts or the data stored in their accounts
+- users attempting to access their accounts are redirected to an error page
+
+## Deciding to suspend GOV.UK Account
+
+You may need to suspend GOV.UK Account because of a:
+
+- security incident or data leak
+- major breaking bug
+- request from the senior management team (SMT)
+- planned maintenance period
+
+## Before you start
+
+To suspend or resume GOV.UK Account, you must be a GDS GOV.UK programme developer with:
+
+- access to the GDS VPN
+- a [GDS GitHub account](https://github.com/alphagov/)
+- access to the GOV.UK Account production environment through your GDS GitHub account
+
+## Suspend GOV.UK Account
+
+1. Sign in to the GDS VPN using the command line or the Cisco AnyConnect Secure Mobility Client.
+
+1. Sign in to [GDS Concourse homepage](https://cd.gds-reliability.engineering) using your GDS GitHub account credentials.
+
+    On the left hand side of the page, you will see a list of Concourse pipelines called __all pipelines__. Pipelines in this list are grouped under headings.
+
+1. Select the __govuk-tools__ group and then select the [__govuk-account-manager-prototype__ pipeline](https://cd.gds-reliability.engineering/teams/govuk-tools/pipelines/govuk-account-manager-prototype).
+
+    You can now see the deploy pipeline for the GOV.UK Account Manager prototype.
+
+    There are 4 suspend and resume jobs at the start of the deploy pipeline:
+    - suspend_staging
+    - suspend_production
+    - resume_staging
+    - resume_production
+
+    You can suspend the staging and production environments independently. For example, you can suspend staging as a test before suspending production.
+
+1. Select __suspend_staging__ or __suspend_production__ to go to the suspend job screen.
+
+1. Select the __Trigger Build__ icon in the top right corner of the screen to start the job and trigger the build. The suspend job:
+    - checks the `git-main` branch for the latest changes to the [Account Manager prototype](https://github.com/alphagov/govuk-account-manager-prototype)
+    - maps the GOV.UK Account URL to the [GOV.UK Account static error page](https://govuk-account-static-errors.london.cloudapps.digital/)
+    - unmaps the GOV.UK Account app from the GOV.UK Account URL
+    - maps the attribute store URL to the GOV.UK Account static error page
+    - unmaps the attribute store app from the attribute store URL
+
+    If the suspend job completes successfully, the top banner will turn green.
+
+### Check that GOV.UK Account is suspended
+
+To check that GOV.UK Account is suspended, check that the following webpages display the [GOV.UK Account static error page](https://govuk-account-static-errors.london.cloudapps.digital/):
+
+- [GOV.UK Account homepage](https://www.account.publishing.service.gov.uk)
+- [GOV.UK Account new account creation webpage](https://www.account.publishing.service.gov.uk/new-account)
+- [Brexit transition checker](https://www.gov.uk/transition) - select the sign-in button in the header
+- [Brexit transition checker questions page](https://www.gov.uk/transition-check/questions) - select the sign-in button in the header
+
+Finally, go to the [Brexit transition checker results page](https://www.gov.uk/transition-check/results?c[]=living-ie) and select both of the following:
+
+- the __Subscribe__ button at the bottom of the page
+- the banner link at the top of the page
+
+Both of these options should take you to a page titled "Get email alerts about your results".
+
+If any of these tests fail,
+
+- check for error messages in the suspend job task list on concourse
+- check the concourse jobs code in the [GOV.UK Account Manager prototype concourse folder on GitHub](https://github.com/alphagov/govuk-account-manager-prototype/tree/main/concourse)
+- contact the GOV.UK Account team through the [`govuk-accounts-tech` slack channel](https://app.slack.com/client/T8GT9416G/C011Y5SAY3U) (in-hours only)
+
+### Change the static error page
+
+If you need to change the content of the [GOV.UK Account static error page](https://govuk-account-static-errors.london.cloudapps.digital/), go to the [GOV.UK Account static error page GitHub repo](https://github.com/alphagov/govuk-account-static-errors/).
+
+## Resume GOV.UK Account
+
+1. Sign in to the GDS VPN using the command line or the Cisco AnyConnect Secure Mobility Client
+
+1. Sign in to [GDS Concourse homepage](https://cd.gds-reliability.engineering) using your GDS GitHub account credentials.
+
+    On the left hand side of the page, you will see a list of Concourse pipelines called __all pipelines__. Pipelines in this list are grouped under headings.
+
+1. Select the __govuk-tools__ group and then select the [__govuk-account-manager-prototype__ pipeline](https://cd.gds-reliability.engineering/teams/govuk-tools/pipelines/govuk-account-manager-prototype).
+
+    You can now see the deploy pipeline for the GOV.UK Account Manager prototype.
+
+    There are 4 suspend and resume jobs at the start of the deploy pipeline:
+    - suspend_staging
+    - suspend_production
+    - resume_staging
+    - resume_production
+
+    You can resume the staging and production environments independently.
+
+1. Select __resume_staging__ or __resume_production__to go to the resume job screen.
+
+1. Select the __Trigger Build__ icon in the top right corner of the screen to start the job and trigger the build.
+
+    If the resume job completes successfully, the top banner will turn green.
+
+### Check that GOV.UK Account has resumed
+
+To check that GOV.UK Account is on, go to the following webpages and check that they all display their pages successfully:
+
+- [GOV.UK Account sign in page](https://www.account.publishing.service.gov.uk/sign-in)
+- [GOV.UK Account new account creation webpage](https://www.account.publishing.service.gov.uk/new-account)
+- [Brexit transition checker](https://www.gov.uk/transition) - select the sign-in button in the header
+- [Brexit transition checker questions page](https://www.gov.uk/transition-check/questions) - select the sign-in button in the header
+
+Finally, go to the [Brexit transition checker results page](https://www.gov.uk/transition-check/results?c[]=living-ie) and select both of the following:
+
+- the __Subscribe__ button at the bottom of the page
+- the banner link at the top of the page
+
+Both of these options should take you to a page titled "Choose how you want to stay up to date".
+
+If any of these tests fail,
+
+- check for error messages in the suspend job task list on concourse
+- check the concourse jobs code in the [GOV.UK Account Manager prototype concourse folder on GitHub](https://github.com/alphagov/govuk-account-manager-prototype/tree/main/concourse)
+- contact the GOV.UK Account team through the [`govuk-accounts-tech` slack channel](https://app.slack.com/client/T8GT9416G/C011Y5SAY3U) (in-hours only)
