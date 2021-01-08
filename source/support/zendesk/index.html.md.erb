@@ -1,8 +1,246 @@
 ---
-title: Zendesk
+title: Solve Zendesk tickets
 weight: 31
-last_reviewed_on: 2020-12-10
+last_reviewed_on: 2021-01-06
 review_in: 6 months
 ---
 
-# Zendesk
+# Solve Zendesk tickets
+
+## How tickets are triaged to the GOV.UK Account team 2nd line
+
+All tickets go through 1st line user support first. 1st line only send us tickets that are about:
+
+- feedback on the account
+- a technical issue a user is having
+- feedback on the Brexit checker
+
+## Respond to and solve tickets
+
+There’s a [GOV.UK Account team rota](https://docs.google.com/spreadsheets/d/1cfoRyupvHzIqrcdes_JwQh_qbuwCiNqIuMt_iTDz8Tc/edit#gid=1167069729) for dealing with support tickets.
+
+There’s usually 2 people on the rota every day: one technical person and one non-technical person.
+
+When you’re on the rota, you should spend about an hour a day working through tickets.
+
+### Our SLA for responding to or resolving tickets
+
+Ideally we should respond to or solve:
+
+- new tickets within 2 working days
+- open tickets within 5 working days
+- pending tickets within 5 working days
+
+### Prioritise tickets
+
+Work through tickets in this order:
+
+1. New tickets.
+2. Open tickets.
+3. Pending tickets that have not been updated in 5 working days or more.
+
+It helps if you order the tickets by the __Requested__ field in Zendesk.
+
+## Solve new and open tickets
+
+How you solve new and open tickets differs depending on what the ticket is about.
+
+### If the ticket is about feedback on the account (negative or positive)
+
+#### If the ticket is anonymous
+
+1. Add the __govuk_account_brexit__ tag to the ticket.
+1. Add an internal note to explain why you’re solving it. For example: "A bit of positive feedback. Solving this ticket because we don’t need to do anything."
+1. Submit the ticket as __solved__ using the dropdown at the bottom.
+1. If the feedback in the ticket points to something we can improve or change, add a card to __ready to be prioritised__ in our [backlog trello board](https://trello.com/b/c85oxVeR/backlog-accounts) so the team can discuss it at pre-planning. If you’re not sure it merits a card, ask the team in the team slack channel.
+
+#### If the user left their name and contact details
+
+We have a macro for asking users for more feedback. You must:
+
+1. Respond to the user using the [__GOV.UK Account::Additional feedback requested__ macro](#gov-uk-account-additional-feedback-requested).
+1. Record the ticket in the [__Asked for feedback__ tab in the feedback spreadsheet](https://docs.google.com/spreadsheets/d/1cfoRyupvHzIqrcdes_JwQh_qbuwCiNqIuMt_iTDz8Tc/edit#gid=621146224).
+1. Submit the ticket as __pending__ using the dropdown at the bottom.
+If the feedback in the ticket points to something we can improve or change, add a card to __ready to be prioritised__ in our [backlog trello board](https://trello.com/b/c85oxVeR/backlog-accounts) so the team can discuss it at pre-planning. If you’re not sure it merits a card, ask the team in the team slack channel.
+
+If the user answers the follow-up feedback questions, you must:
+
+1. Record their feedback in the __Asked for feedback__ tab in our spreadsheet. You find the matching ticket number by searching for that number, for example "4360500".
+1. Thank the user for their input using the [__GOV.UK Account: Thanking user for additional feedback__ macro](#gov-uk-account-thanking-user-for-additional-feedback) and solve the ticket.
+
+### If the ticket is about a technical issue
+
+#### If the ticket is anonymous
+
+We will not be able to respond to the user.
+
+If the issue seems urgent and specific, talk to the developer on the rota about the issue so we can try to fix it.
+
+If the issue points to something we can improve or change, add a card to __ready to be prioritised__ in our [backlog trello board](https://trello.com/b/c85oxVeR/backlog-accounts) so the team can discuss it at pre-planning. If you’re not sure it merits a card, you can post in our slack channel and ask the team what they think.
+
+Once the issue is solved or we’ve done everything we can:
+
+1. Add the __govuk_account_brexit__ tag to the ticket.
+1. Add an internal note explaining what we did or what happened.
+1. Submit as __solved__.
+
+#### If the user left their name and contact details
+
+If the user is describing a common issue, for example problems with 2FA or confusion about what the account is, you may be able to use one of our macros.
+
+If you need more information to understand the problem, respond to the user with questions and submit the ticket as pending. Use the [__GOVUK Account: More information needed__ macro](#gov-uk-account-more-information-needed) for this. Ask more specific questions if needed.
+
+If the issue seems urgent and specific, talk to the developer on the rota about it so we can try to fix it.
+
+If the issue points to something we can improve or change, add a card to __ready to be prioritised__ in our [backlog trello board](https://trello.com/b/c85oxVeR/backlog-accounts) so the team can discuss it at pre-planning. If you’re not sure it merits a card, you can post in our slack channel and ask the team what they think.
+
+Once the issue is solved or we’ve done everything we can:
+
+1. Add the __govuk_account_brexit__ tag to the ticket.
+1. Respond to the user explaining what we’ve done to fix the issue or what we’re planning to do.
+1. Submit as __solved__.
+
+### If the ticket is a question about how to do something in the account
+
+Sometimes we get tickets from users who want to change their details or their password. We should explain they can do it themselves, and how.
+
+If the user wants to update their email, phone number or password:
+
+1. Use the [__GOV.UK Account - Changing details (email or phone)__ macro](#gov-uk-account-changing-details-email-or-phone).
+1. Submit the ticket as solved.
+
+### If the ticket is about the Brexit checker
+
+This process is still to be confirmed.
+
+In the interim, we should thank the users who sent feedback. If it feels appropriate, ask them follow-up questions about their experience using the account:
+
+1. Respond to the user using the [__GOV.UK Account: Additional feedback requested__ macro](#gov-uk-account-additional-feedback-requested).
+1. Submit the ticket as pending.
+
+### If the ticket is not for GOV.UK Accounts to solve
+
+Upon further investigation, a ticket may not be for our team to solve. For example, if it is to do with other things such as a visa application.
+
+In this case, you must send the ticket back to the 2nd line user support escalation team.
+
+1. Assign the ticket in Zendesk to __2nd Line --- User support escalation__.
+1. Tag the ticket as __govuk_account_brexit__.
+1. Add an internal note explaining why.
+1. Submit the ticket as __new__ using the dropdown at the bottom.
+
+### If the ticket is not to do with GOV.UK Accounts or government
+
+Sometimes we get tickets that are not about anything to do with GOV.UK or the government.
+
+In this case, we solve the ticket but do not notify the user that we’ve done this.
+
+1. Add the __govuk_account_brexit__ tag to the ticket.
+1. Add the __do_not_email__ and __do_not_reply__ tags to the ticket.
+1. Add an internal note that says: "The message in this ticket isn’t meaningful. There is no action for us."
+1. Submit as __solved__.
+
+## Solve pending tickets
+
+We aim to close any pending tickets that have not been updated for 5 working days or longer.
+
+1. Use the [__GOV.UK Account: Closing a pending ticket__ macro](#gov-uk-account-closing-a-pending-ticket). Change the text if you think the exchange we’ve had with the user warrants it.
+1. Submit the ticket as solved.
+
+## Macros to answer common questions quickly
+
+We’ve set up a few macros to help you answer common questions more quickly.
+
+You can adjust the wording so your response ties in to the question the user is asking.
+
+### GOV.UK Account: Account confusion/signing in
+
+This macro explains what the account is for.
+
+Use this macro when people get in touch because they think they have an account when they do not actually have one.
+
+Usually these people are confusing an existing account (for example, gateway or settled status) with a GOV.UK account.
+
+### GOV.UK Account: Not getting security code
+
+This macro explains what the user can do if they’re not getting the security code.
+
+### GOV.UK Account: More information needed
+
+This macro asks the user to provide more information.
+
+Use this macro if the initial ticket doesn’t have enough information for you to be able to understand the problem.
+
+### GOV.UK Account: Additional feedback requested
+
+This macro thanks the user for giving feedback and asks them a few more questions about their experience with the account.
+
+Use this macro if the user has given a bit of feedback about their experience.
+
+### GOV.UK Account: Closing a pending ticket
+
+This macro explains that we’re going to close the ticket but that the user can reopen it anytime if they need to.
+
+Use this macro to close __pending__ tickets that have not been updated in 5 working days or more.
+
+### GOV.UK Account: Changing details (email or phone)
+
+This macro explains what the user needs to do to update their account.
+
+Use this macro when dealing with tickets where a user asks us to update their details.
+
+### GOV.UK Account: Thanking user for additional feedback
+
+This macro thanks users for providing answers to the follow-up feedback questions.
+
+Use this macro to respond to tickets where users have answered out feedback questions.
+
+## Prepared responses to common issues
+
+### Security question
+
+Thanks for your question. We take security very seriously. We make sure any information a user submits is held securely.
+
+We have put in place security measures that defend against the kinds of threats that GOV.UK accounts could face. For example:
+
+- all data is encrypted between us and a user’s web browser using HTTPS
+- a secondary security code is required to log into an account
+- accounts lock out after a set number of failed login attempts
+- we store passwords securely
+
+You can review or report any suspicious activity in the security section of your account.
+
+You also can read about how GOV.UK accounts use cookies and personal information in the full [GOV.UK accounts privacy notice](https://www.gov.uk/government/publications/govuk-accounts-trial-full-privacy-notice-and-accessibility-statement).
+
+We will keep re-assessing our security measures as the GOV.UK account develops.
+
+Please let us know if you have any more questions.
+
+Best wishes,
+
+[NAME]
+
+[JOB]
+
+GOV.UK Account team
+
+### Change email address
+
+Hello
+
+Thanks for your message.
+
+You can update the email address for your GOV.UK account yourself.
+
+Sign in to your account and then go to ‘Manage your account’. You’ll see your account details and the option to change them. Click the ‘Change’ link next to your email address and follow the instructions.
+
+Or you can follow this link directly
+https://www.account.publishing.service.gov.uk/account/edit/email
+
+Best wishes
+
+[NAME]
+
+[JOB]
+
+GOV.UK Account team
