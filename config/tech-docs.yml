@@ -13,6 +13,8 @@ header_links:
   Get Started: /
   Documentation: /
   Support: /
+footer_links:
+  Team Manual Accessibility: /accessibility.html
 
 # Enables search functionality. This indexes pages only and is not recommended for single-page sites.
 enable_search: true
