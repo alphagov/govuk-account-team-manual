@@ -120,7 +120,7 @@ See [the PaaS support page][paas-support] and [rota][paas-rota] for more informa
 
 ### Someone is attacking us
 
-See the section on security incidents in the [GOV.UK Developer Documenation incident
+See the section on security incidents in the [GOV.UK Developer Documentation incident
 guidance][incident] for more information.
 
 ### An app is unable to keep up with the volume of requests
@@ -170,8 +170,8 @@ $ cf services
 
 If one of these needs to scale up, for example:
 
-- New Sidekiq jobs cannot be enqueued because Redis is out of memory
-- New users or attributes cannot be stored because Postgres is out of disk space
+- new Sidekiq jobs cannot be enqueued because Redis is out of memory
+- new users or attributes cannot be stored because Postgres is out of disk space
 
 You can do so with
 
@@ -196,7 +196,7 @@ tweeted).
 
 If you can track down the bug and fix it, please do!
 
-See also the following [continuous deployment documentation](#notes-on-continuous-deployment).*
+See also the following [continuous deployment documentation](#notes-on-continuous-deployment).
 
 ## Nuclear options
 
@@ -256,9 +256,9 @@ that:
 - if you scale the app through the Cloud Foundry CLI, the app will
   scale back down when the next deployment happens.
 
-You can disable automatic deployments by pausing the relevant pipeline
-by selecting the pause button in the top-right corner (next to your
-username). A paused pipeline turns blue.
+You can disable automatic deployments by pausing the relevant pipeline.
+Select the pause button in the top-right corner (next to your
+username) of the pipeline. A paused pipeline turns blue.
 
 [cd]: https://cd.gds-reliability.engineering
 [cd-account-manager]: https://cd.gds-reliability.engineering/teams/govuk-tools/pipelines/govuk-account-manager-prototype
