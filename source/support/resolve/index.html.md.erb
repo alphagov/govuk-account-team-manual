@@ -46,37 +46,36 @@ The following sections contain information on our repositories.
 
 #### GOV.UK Account Manager Prototype
 
-[GitHub repository][repo-account-manager].
-
 Handles user interactions with accounts (e.g. logging in, signing up,
 brokering attribute store data, seeing "their dashboard").
 
+See the [GOV.UK Account Manager Prototype GitHub repository][repo-account-manager] for more information.
+
 #### GOV.UK Attribute Service Prototype
 
-[GitHub repository][repo-attribute-service].
+A key-value store for user attributes. This prototype currently only stores users' checker answers.
 
-A key-value store for user attributes (currently just their checker
-answers).
+See the [GOV.UK Attribute Service Prototype GitHub repository][repo-attribute-service] for more information.
 
 #### GOV.UK Accounts Architecture
 
-[GitHub repository][repo-architecture].
+Contains information on how the system architecture works.
 
-We've made some notes on how the system architecture works here.
+See the [GOV.UK Accounts Architecture GitHub repository][repo-architecture] for more information.
 
 #### GOV.UK Accounts Tech Docs
 
-[GitHub repository][repo-docs].
+Contains our technical documentation.
 
-We have some under-development tech docs over here.
+See the [GOV.UK Accounts Tech Docs GitHub repository][repo-docs] for more information.
 
 #### GOV.UK Docker
-
-[GitHub repository][repo-govuk-docker].
 
 You can spin up a local development version of the account system,
 including the transition checker integration, with the latest GOV.UK
 Docker.
+
+See the [GOV.UK Docker GitHub repository][repo-govuk-docker] for more information.
 
 [repo-account-manager]: https://github.com/alphagov/govuk-account-manager-prototype/
 [repo-architecture]: https://github.com/alphagov/govuk-account-architecture/
@@ -103,26 +102,26 @@ The apps communicate, so a problem in one could cascade to the other.
 ## Solving the problem
 
 GOV.UK Accounts is still part of GOV.UK, so make sure to follow the
-[main incident guidance][incident], in addition to diagnosing and
+[GOV.UK developer documentation incident guidance][incident], in addition to diagnosing and
 fixing any accounts-specific issue.
 
 [incident]: https://docs.publishing.service.gov.uk/manual/incident-what-to-do.html
 
 ### There's a problem with the PaaS
 
-If the problem is with the PaaS itself (for example, requests aren't
+If the problem is with the PaaS itself (for example, requests are not
 even making it to the app, despite the app being healthy), you can
 escalate the issue to the PaaS on-call support.
 
-*See [the PaaS support page][paas-support] and [rota][paas-rota].*
+See [the PaaS support page][paas-support] and [rota][paas-rota] for more information.
 
 [paas-support]: https://admin.cloud.service.gov.uk/support
 [paas-rota]: https://rotas.cloudapps.digital/
 
 ### Someone is attacking us
 
-*See the section on security incidents in the [main incident
-guidance][incident].*
+See the section on security incidents in the [GOV.UK developer documentation incident
+guidance][incident] for more information.
 
 ### An app is unable to keep up with the volume of requests
 
@@ -132,10 +131,10 @@ that app up by:
 - changing the deployment pipeline
 - using the Cloud Foundry CLI
 
-If you are adding more then 50GiB of RAM then please let PaaS know (in
+If you are adding more then 50GB of RAM then please let PaaS know (in
 `#paas`) as they may need to scale to accommodate our new usage.
 
-*See also [notes on continuous deployment](#notes-on-continuous-deployment).*
+See also the following [continuous deployment documentation](#notes-on-continuous-deployment).
 
 #### Change the deployment pipeline
 
@@ -160,7 +159,7 @@ The `<app name>` is either `govuk-account-manager` or
 
 ### Postgres or Redis is unable to keep up
 
-We have one Redis instance, used by the Account Manager, and two
+We have one Redis instance, used by the Account Manager, and 2
 Postgres instances, one for each app.
 
 You can list them by running
@@ -171,8 +170,8 @@ $ cf services
 
 If one of these needs to scale up, for example:
 
-- New Sidekiq jobs cannot be enqueued because Redis is out of memory
-- New users or attributes cannot be stored because Postgres is out of disk space
+- new Sidekiq jobs cannot be enqueued because Redis is out of memory
+- new users or attributes cannot be stored because Postgres is out of disk space
 
 You can do so with
 
@@ -182,8 +181,8 @@ $ cf update-service <service name> -p <plan name>
 
 To list all plans, run `cf marketplace`.
 
-*See the PaaS docs on [scaling Postgres][scale-postgres] and [scaling
-Redis][scale-redis].*
+See the [GOV.UK PaaS documentation on scaling Postgres][scale-postgres] and [scaling
+Redis][scale-redis] for more information.
 
 [scale-postgres]: https://docs.cloud.service.gov.uk/deploying_services/postgresql/#upgrade-postgresql-service-plan
 [scale-redis]: https://docs.cloud.service.gov.uk/deploying_services/redis/#upgrade-redis-service-plan
@@ -197,7 +196,7 @@ tweeted).
 
 If you can track down the bug and fix it, please do!
 
-*See also [notes on continuous deployment](#notes-on-continuous-deployment).*
+See also the following [continuous deployment documentation](#notes-on-continuous-deployment).
 
 ## Nuclear options
 
@@ -207,7 +206,7 @@ See the [documentation on suspending GOV.UK Account](/support/toggle-accounts/#s
 
 ### I need to turn off the Transition Checker integration
 
-The accounts functionality on GOV.UK is enabled by two feature flags,
+The accounts functionality on GOV.UK is enabled by 2 feature flags,
 set in puppet.
 
 Set these to false to disable the integration:
@@ -254,9 +253,9 @@ that:
 - if you scale the app through the Cloud Foundry CLI, the app will
   scale back down when the next deployment happens.
 
-You can disable automatic deployments by pausing the relevant pipeline
-by clicking the pause button in the top-right corner (next to your
-username).  A paused pipeline turns blue.
+You can disable automatic deployments by pausing the relevant pipeline.
+Select the pause button in the top-right corner (next to your
+username) of the pipeline. A paused pipeline turns blue.
 
 [cd]: https://cd.gds-reliability.engineering
 [cd-account-manager]: https://cd.gds-reliability.engineering/teams/govuk-tools/pipelines/govuk-account-manager-prototype

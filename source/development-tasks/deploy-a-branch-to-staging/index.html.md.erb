@@ -19,7 +19,7 @@ If the branch you want to deploy is on GitHub, use the existing Concourse pipeli
 1. Sign in to Concourse:
 
     ```
-    fly -t cd-govuk-tools login
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
     ```
 
 2. Disable deployments to production:
