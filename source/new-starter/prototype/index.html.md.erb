@@ -70,7 +70,13 @@ To alert developers when they attempt to enter a secret in the codebase, [instal
 
 ## Start the Brexit transition checker and account manager prototype apps
 
-In the command line, go to the `finder-frontend` repo folder and run `govuk-docker-up`. This starts the `finder-frontend` Brexit transition checker and its dependencies.
+To register a new GOV.UK account most users arrive through the Brexit checker.
+Without data from the Brexit checker, the user's dashboard will not show any integrations with GOV.UK services.
+
+You can spin up all apps required to follow the full user registration journey with govuk-docker.
+
+In the command line, run `govuk-docker up finder-frontend-app-account`. This will start `finder-frontend` which contains the Brexit checker.
+It will also start the `govuk-account-manager-prototype` and `govuk-attribute-service-prototype` and configure it to speak to `finder-frontend` locally.
 
 Open up a web browser and go to `https://finder-frontend.dev.gov.uk`.
 
