@@ -7,17 +7,13 @@ review_in: 6 months
 
 # Set up the GOV.UK account manager prototype
 
-The GOV.UK account manager prototype is an application to test how users:
-
-- authenticate their data
-- authorise their data for exchange
-- stay informed of the use of their data
-- manage consent for use of their data
+The GOV.UK account manager prototype and attribute store are a central part of GOV.UK Accounts.
+You can find out more about how they work with other services in [How GOV.UK Accounts works](/new-starter/how-it-works/#how-gov-uk-accounts-works).
 
 This content tells you how to:
 
-- set up and run the GOV.UK account manager prototype
-- integrate the `finder-frontend` Brexit transition checker with the GOV.UK account manager
+- set up and run the GOV.UK account manager prototype and attribute store locally
+- integrate the `finder-frontend` Brexit checker with the GOV.UK account manager and attribute store
 
 This content is for GOV.UK developers working on Macs or Linux. If you are not a GOV.UK developer, you cannot use this prototype.
 
@@ -31,7 +27,7 @@ To set up GOV.UK account manager, clone the following repositories (repos) to th
 
 - the [GOV.UK account manager prototype](https://github.com/alphagov/govuk-account-manager-prototype)
 - the [GOV.UK attribute service prototype](https://github.com/alphagov/govuk-attribute-service-prototype)
-- the [finder frontend](https://github.com/alphagov/finder-frontend) that contains the Brexit transition checker
+- the [finder frontend](https://github.com/alphagov/finder-frontend) that contains the Brexit checker
 - the [email alert API](https://github.com/alphagov/email-alert-api/)
 
 You [create the `~/govuk` folder](https://github.com/alphagov/govuk-docker/#installation) when you install GOV.UK Docker.
@@ -41,7 +37,7 @@ Check out the following branches on the different repos:
 - `master` branch on the GOV.UK Docker repo
 - `main` branch on the GOV.UK account manager prototype repo
 - `main` branch on the GOV.UK attribute service prototype repo
-- `master` branch on the Brexit transition checker repo
+- `master` branch on the Brexit checker repo
 
 ## Set up the docker image and database
 
@@ -72,18 +68,51 @@ The `detect-secrets` plugin to the Pre-Commit framework detects secrets within a
 
 To alert developers when they attempt to enter a secret in the codebase, [install the client-side pre-commit hook](https://github.com/Yelp/detect-secrets#client-side-pre-commit-hook).
 
-## Start the Brexit transition checker and account manager prototype apps
+## Start the account manager prototype without the Brexit checker
 
-In the command line, go to the `finder-frontend` repo folder and run `govuk-docker-up`. This starts the `finder-frontend` Brexit transition checker and its dependencies.
+You can start the account manager prototype without the checker.
+
+You can run every feature of the prototype locally, however the registration journey will not transfer data from the checker.
+The account will also be empty of user data.
+
+To start this with govuk docker:
+
+In the command line, run `govuk-docker up govuk-account-manager-prototype-app`. Running this command starts:
+- `govuk-account-manager-prototype`
+- `govuk-attribute-service-prototype`
+- background services required for these apps to work
+
+This command also configures the 2 applications so that they communicate with each other.
+
+Open up a web browser and go to `http://www.login.service.dev.gov.uk/sign-in`.
+
+If you have set up the apps correctly, you will be able to register a new account, or sign in if you have already created one.
+
+## Start the Brexit checker and account manager prototype apps
+
+To register a new GOV.UK account most users arrive through the checker.
+Without data from the checker, the user's dashboard will not show any integrations with GOV.UK services.
+
+You can spin up all apps required to follow the full user registration journey with govuk-docker.
+
+In the command line, run `govuk-docker up finder-frontend-app-account`. Running this command starts:
+
+- `finder-frontend`, which contains the checker
+- `govuk-account-manager-prototype`
+- `govuk-attribute-service-prototype`
+- background services required for these apps to work
+
+This command also configures these apps so that they can communicate with each other.
 
 Open up a web browser and go to `https://finder-frontend.dev.gov.uk`.
 
 If you have set up the apps correctly, you will be able to access the following links:
 
-- the [Brexit transition checker journey start page](http://finder-frontend.dev.gov.uk/transition-check/questions)
-- the [Brexit transition checker results page](http://finder-frontend.dev.gov.uk/transition-check/results?c[]=living-ie) that reflects the answers you give during the Brexit transition checker journey
+- the [Brexit checker journey start page](http://finder-frontend.dev.gov.uk/transition-check/questions)
+- the [Brexit checker results page](http://finder-frontend.dev.gov.uk/transition-check/results?c[]=living-ie) that reflects the answers you give during the Brexit checker journey
 - select the subscribe banner or button to access the [account sign up page](http://finder-frontend.dev.gov.uk/transition-check/save-your-results?c%5B%5D=living-ie)
 
 When you have set up your local account, you can [sign into your account](http://www.login.service.dev.gov.uk/) and view the manage screens.
 
 You have now set up and run the GOV.UK account manager prototype, and integrated the `finder-frontend` Brexit transition checker with the GOV.UK account manager.
+
