@@ -89,3 +89,21 @@ If you have set up the apps correctly, you will be able to access the following 
 When you have set up your local account, you can [sign into your account](http://www.login.service.dev.gov.uk/) and view the manage screens.
 
 You have now set up and run the GOV.UK account manager prototype, and integrated the `finder-frontend` Brexit transition checker with the GOV.UK account manager.
+
+## Start the account manager prototype without the checker
+
+Some features do not require the checker to be present, and can be tested locally without the checker running.
+These include:
+- Signup (without any Brexit checker data) - /new-account
+- Login (if you have created an account in your local database) - /sign-in
+- The account dashboard (when logged in) - /account
+- The account management screen (when logged in) - /account/manage
+- The account security screen (when logged in) - /account/security
+
+To start this with govuk docker:
+
+In the command line, run `govuk-docker up govuk-account-manager-prototype-app`. This will start the govuk account manager prototype and the attribute service prototype.
+
+Open up a web browser and go to `http://www.login.service.dev.gov.uk/sign-in`.
+
+If you have set up the apps correctly, you will be able to register a new account, or sign in if you have already created one.
