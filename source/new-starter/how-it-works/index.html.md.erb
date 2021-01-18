@@ -1,8 +1,65 @@
 ---
-title: How GOV.UK Accounts works
+title: How GOV.UK Account works
 weight: 22
 last_reviewed_on: 2020-12-10
 review_in: 6 months
 ---
 
-# How GOV.UK Accounts works
+# How GOV.UK Account works
+
+The core GOV.UK account architecture includes:
+
+- an authentication service
+- an attribute store
+
+In the future, the architecture should also include:
+
+- a broker
+- a preferences and consent management service
+- a trust framework
+- a fraud protection and monitoring service
+
+## Current architecture features
+
+### Authentication
+
+The authentication service handles:
+
+- user registration
+- two-factor authentication (2FA)
+- user sign-ins
+- password resets and confirmation emails
+
+### Attribute store
+
+The attribute store is a centralised location that holds some common data about a user that every GOV.UK service might need.
+
+## Future architecture features
+
+### Broker
+
+The broker is a service that all other services and the user interacts with and through.
+
+The broker also blinds services from each other and makes sure services only access the personal data that users consent to sharing.
+
+### Preferences and consent management service
+
+The preferences and consent management service:
+
+- allows the user to control consent over how and when their data is shared
+- gives the user a security trail of when and where their data was used
+
+### Trust framework
+
+The trust framework ensures and guarantees the trust of the various interacting services.
+
+### Fraud protection and monitoring service
+
+The fraud protection and monitoring service proactively identifies malicious or fraudulent behaviour and alerts developers and security professionals.
+
+## Further information
+
+For more information on the GOV.UK Account architecture, see the:
+
+- [technical architecture behind a GOV.UK account blog](https://insidegovuk.blog.gov.uk/2021/01/07/the-technical-architecture-behind-a-gov-uk-account/)
+- [GOV.UK Account technical architecture repo documentation](https://github.com/alphagov/govuk-account-architecture/blob/master/docs/GOV.UK-Accounts.md#1-accounts-phase-1).
