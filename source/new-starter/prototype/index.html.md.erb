@@ -8,6 +8,7 @@ review_in: 6 months
 # Set up the GOV.UK account manager prototype
 
 The GOV.UK account manager prototype and attribute store are a central part of GOV.UK Accounts.
+
 You can find out more about how they work with other services in [How GOV.UK Accounts works](/new-starter/how-it-works/#how-gov-uk-accounts-works).
 
 This content tells you how to:
@@ -68,43 +69,45 @@ The `detect-secrets` plugin to the Pre-Commit framework detects secrets within a
 
 To alert developers when they attempt to enter a secret in the codebase, [install the client-side pre-commit hook](https://github.com/Yelp/detect-secrets#client-side-pre-commit-hook).
 
-## Start the account manager prototype without the Brexit checker
+## Run the GOV.UK account manager prototype and attribute store
 
-You can start the account manager prototype without the checker.
+You can run the GOV.UK account manager prototype and attribute store locally without also running the Brexit checker.
 
-You can run every feature of the prototype locally, however the registration journey will not transfer data from the checker.
-The account will also be empty of user data.
+You can run every feature of the prototype locally, however:
 
-To start this with govuk docker:
+- the registration journey will not transfer data from the checker
+- the account will not contain any user data
 
-In the command line, run `govuk-docker up govuk-account-manager-prototype-app`. Running this command starts:
-- `govuk-account-manager-prototype`
-- `govuk-attribute-service-prototype`
+In the command line, run `govuk-docker up govuk-account-manager-prototype-app`. Running this command starts the:
+
+- `govuk-account-manager-prototype` app
+- `govuk-attribute-service-prototype` app
 - background services required for these apps to work
 
-This command also configures the 2 applications so that they communicate with each other.
+This command also configures these 2 applications so that they communicate with each other.
 
-Open up a web browser and go to `http://www.login.service.dev.gov.uk/sign-in`.
+Go to `http://www.login.service.dev.gov.uk/sign-in` in your web browser.
 
 If you have set up the apps correctly, you will be able to register a new account, or sign in if you have already created one.
 
-## Start the Brexit checker and account manager prototype apps
+You have now set up and run the GOV.UK account manager prototype and attribute store.
 
-To register a new GOV.UK account most users arrive through the checker.
-Without data from the checker, the user's dashboard will not show any integrations with GOV.UK services.
+## Run the Brexit checker with the GOV.UK account manager prototype and attribute store
 
-You can spin up all apps required to follow the full user registration journey with govuk-docker.
+To register a new GOV.UK account, most users arrive through the Brexit checker. Without data from the checker, the user's dashboard will not show any integrations with GOV.UK services.
 
-In the command line, run `govuk-docker up finder-frontend-app-account`. Running this command starts:
+You can run the GOV.UK account manager prototype, attribute store and Brexit checker locally. To do this, you use `govuk-docker` to start all apps needed for the full user registration journey.
 
-- `finder-frontend`, which contains the checker
-- `govuk-account-manager-prototype`
-- `govuk-attribute-service-prototype`
+In the command line, run `govuk-docker up finder-frontend-app-account`. Running this command starts the:
+
+- `finder-frontend` app, which contains the checker
+- `govuk-account-manager-prototype` app
+- `govuk-attribute-service-prototype` app
 - background services required for these apps to work
 
 This command also configures these apps so that they can communicate with each other.
 
-Open up a web browser and go to `https://finder-frontend.dev.gov.uk`.
+Go to `https://finder-frontend.dev.gov.uk` in your web browser.
 
 If you have set up the apps correctly, you will be able to access the following links:
 
@@ -114,4 +117,7 @@ If you have set up the apps correctly, you will be able to access the following 
 
 When you have set up your local account, you can [sign into your account](http://www.login.service.dev.gov.uk/) and view the manage screens.
 
-You have now set up and run the GOV.UK account manager prototype, and integrated the `finder-frontend` Brexit transition checker with the GOV.UK account manager.
+You have now successfully
+
+- set up and run the GOV.UK account manager prototype and attribute store
+- integrated the `finder-frontend` Brexit transition checker with the account manager app
