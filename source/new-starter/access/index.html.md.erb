@@ -1,10 +1,77 @@
 ---
-title: Access
+title: Get access to required apps
 weight: 23
 last_reviewed_on: 2020-12-10
 review_in: 6 months
 ---
 
-# Access
+# Get access to required apps and information
 
-List of all the things you should have access to and how to get that access
+When you join the GOV.UK Account team, you must get access to all the required apps and information you need.
+
+## Complete the GOV.UK new starter process
+
+If you are a new developer on GDS or the GOV.UK programme, you must complete the GOV.UK developer new starter process.
+
+See the [documentation on getting started on GOV.UK](https://docs.publishing.service.gov.uk/manual/get-started.html) for more information.
+
+At the end of this process, you should have access to the following:
+
+- the GOV.UK production environment
+- [GDS Concourse](https://cd.gds-reliability.engineering/)
+- the GOV.UK GitHub team
+
+If you are not are new to GDS or the GOV.UK programme, you should have already completed this process.
+
+## Get access to GOV.UK Account team internal tools
+
+Ask the delivery manager for access to the following GOV.UK Account team internal tools:
+
+- [Trello](https://trello.com/) boards
+- [Google drive](https://drive.google.com/drive/folders/1v31pO7qAHMIkQxqF3xZNPcjnEsITnzIU).
+- [Zendesk](https://docs.publishing.service.gov.uk/manual/zendesk.html)
+- [`govuk-accounts` Slack channel](https://app.slack.com/client/T8GT9416G/C012GEZBZM0)
+- [`govuk-accounts-tech` Slack channel](https://app.slack.com/client/T8GT9416G/C011Y5SAY3U)
+
+## Get access to GOV.UK PaaS and Notify
+
+Ask the GOV.UK Account tech lead or lead developer for access to the following:
+
+- [GOV.UK PaaS](https://www.cloud.service.gov.uk/) as a [space developer](https://docs.cloud.service.gov.uk/orgs_spaces_users.html#space-developer)
+- the GOV.UK Account team space on [GOV.UK Notify](https://www.notifications.service.gov.uk/)
+
+## Get access to GOV.UK Account developer Google group
+
+Ask any GOV.UK Account developer to add you to the [GOV.UK Account developer Google group](https://groups.google.com/a/digital.cabinet-office.gov.uk/g/govuk-accounts-developers).
+
+## Get access to Splunk
+
+To access Splunk, raise a IT request:
+
+1. Sign in to the [GDS IT & Estates Web Help Desk](https://gdshelpdesk.digital.cabinet-office.gov.uk/helpdesk/WebObjects/Helpdesk.woa).
+1. In __Request Type__, select __GDS IT Requests__ > __People & accounts__ > __Other Account Requests__.
+1. In __Request Detail__, enter "Please apply gds-027-govuk-accounts role to my google account."
+1. For __Account type__, select __LDAP__.
+1. In __For Google changes__, select __Account correction/change__.
+1. In __Is this request for you?__, select __Yes__.
+1. Select your __Location__ and __Room__, and select __Save__.
+
+When IT tell you the request is complete, check that you can access the [GOV.UK Account Splunk dashboard](https://gds.splunkcloud.com/en-US/app/gds-027-govuk-accounts/dashboards).
+
+## Check access to the GOV.UK Account Grafana dashboard
+
+Check that you have access to the [GOV.UK Account Grafana dashboard](https://grafana-paas.cloudapps.digital/d/_g_9aRoMk/gov-uk-accounts).
+
+If you cannot access this dashboard, speak to IT using Slack or [raise an IT request]([GDS IT & Estates Web Help Desk](https://gdshelpdesk.digital.cabinet-office.gov.uk/helpdesk/WebObjects/Helpdesk.woa).
+
+## Give GOV.UK Seal access to your Github name
+
+The Account team use [Seal Slack bot](https://github.com/alphagov/seal) to give helpful prompts on Slack. One example is the morning reminder for pull requests that require review.
+
+Seal needs to know which GitHub user is in which team. This configuration is described in the [Seal alphagov.yml file](https://github.com/alphagov/seal/blob/master/config/alphagov.yml#L128-L162).
+
+If your username is not already on the list, add your username to the list and raise a pull request, asking other team members to review.
+
+Once the pull request has been merged, the change is automatically deployed to the heroku app.
+
+See this [example Seal pull request](https://github.com/alphagov/seal/pull/205/files) for reference.

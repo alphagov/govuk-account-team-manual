@@ -1,0 +1,64 @@
+---
+title: Install developer tools
+weight: 23
+last_reviewed_on: 2020-12-10
+review_in: 6 months
+---
+
+# Install developer tools
+
+The GOV.UK Account team uses the following developer tools:
+
+- `gds-cli`, the Government Digital Service Command Line Interface (CLI)](https://github.com/alphagov/gds-cli) to connect to the VPN and update secrets
+- fly, a CLI to interact with Concourse
+- the CloudFoundry CLI to interact with our servers on the GOV.UK PaaS
+
+When you join the GOV.UK Account team, you must install these tools.
+
+## Install the gds-cli
+
+The `gds-cli` is a CLI to [connect to the VPN](https://docs.publishing.service.gov.uk/manual/get-started.html#4-connecting-to-the-gds-vpn) and [update secrets](/support/rotate-secrets/#rotate-a-secret).
+  
+To install `gds-cli`, see the [GOV.UK Developer documentation on installing GDS tooling](https://docs.publishing.service.gov.uk/manual/get-started.html#3-install-gds-tooling) for more information.
+
+## Install the fly CLI
+
+[fly](https://concourse-ci.org/fly.html) is a CLI to interact with our Concourse pipelines.
+
+Before you install fly, you must have access to Concourse.
+
+In install fly:
+
+1. Sign in to the GDS VPN using the command line or the Cisco AnyConnect Secure Mobility Client.
+1. Go to the GDS [Concourse instance](https://cd.gds-reliability.engineering/teams/govuk-tools).
+1. Sign in with your GDS GitHub account.
+
+At the bottom of the page there is a section labled __cli__, next to which are three links:
+
+- Download OS X CLI
+- Download Windows CLI
+- Download Linux CLI
+
+Choose the right option for your operating system, and install the downloaded CLI.
+
+Once you have finished, you can confirm fly is correctly installed by running `fly --version`. You should get a response with a version number.
+
+This version should match the version seen at the bottom of the [GDS Concourse instance](https://cd.gds-reliability.engineering/teams/govuk-tools).
+
+## Install the CloudFoundry CLI
+
+The CloudFoundry CLI lets you to interact with our servers on the GOV.UK PaaS.
+
+Currently, there are two main versions of the CloudFoundary CLI, v6 and v7.
+
+You should use v7. The team and documentation in this manual assume that you are using v7.
+
+To download and install v7, see the [CloudFoundry documentation on how to install v7 of the CLI](https://github.com/cloudfoundry/cli/wiki/V7-CLI-Installation-Guide#downloading-the-latest-v7-cf-cli).
+
+Once you have installed the CloudFoundry CLI, check you have the right version by running `cf --version`.
+
+You should get a response with a version number that starts with `cf version 7.`. For example:
+
+```
+cf version 7.2.0+be4a5ce2b.2020-12-10
+```
