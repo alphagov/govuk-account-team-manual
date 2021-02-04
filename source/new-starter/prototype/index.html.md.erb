@@ -103,3 +103,33 @@ You have now successfully
 
 - set up and run the GOV.UK account manager prototype and attribute store
 - integrated the `finder-frontend` Brexit transition checker with the account manager app
+
+## Resolve issues
+
+If you are having issues setting up and running the GOV.UK account manager prototype, it might be because:
+
+- you have not allocated enough resources to GOV.UK Docker
+- there have been backend changes to the database or the prototypes
+- there have been [Ruby on Rails](https://rubyonrails.org/) configuration changes to the app
+
+### Not enough resources allocated to GOV.UK Docker
+
+To change the resource allocation for GOV.UK Docker, see the [GOV.UK Docker readme](https://github.com/alphagov/govuk-docker/blob/master/README.md#installation).
+
+### Backend changes to the database or the prototypes
+
+To account for recent backend changes, go to the main branch of your local GOV.UK Docker repo and run the following in the command line:
+
+```
+govuk-docker run govuk-account-manager-prototype-lite bundle exec rake db:migrate
+govuk-docker run govuk-account-manager-prototype-lite bundle exec rake db:migrate RAILS_ENV=test
+```
+
+Then restart the account manager and, if necessary, Brexit transition checker prototype apps.
+
+### Ruby on Rails configuration changes to the app
+
+If there have been Ruby on Rails configuration changes to the GOV.UK account manager prototype app, you must restart the app.
+
+1. Run `govuk-docker down` in the command line to stop all GOV.UK Docker containers.
+1. Run `govuk-docker-up` in the folder of the app to restart the GOV.UK Docker containers.
