@@ -1,0 +1,22 @@
+---
+title: Analytics
+weight: 61
+last_reviewed_on: 2021-02-09
+review_in: 6 months
+---
+
+# Export registration statistics
+
+You can produce reports with information about the number of registrations, logins and other metrics.
+
+To do this you manually run a rake task in the production environment.
+
+For example, run the following to produce statistics for the 28 October 2020:
+
+```
+cf login -u <your_email> -a https://api.london.cloud.service.gov.uk --sso
+cf target -s production
+cf v3-ssh govuk-account-manager
+$ /tmp/lifecycle/shell
+$ rake "statistics:general[2020-10-28 00:00, 2020-10-28 23
+```
