@@ -1,0 +1,33 @@
+---
+title: Disable registrations
+weight: 42
+last_reviewed_on: 2021-02-09
+review_in: 6 months
+---
+
+# Disable registrations
+
+You can disable registrations in the GOV.UK account manager prototype.
+
+You can do this in either the production or the staging environment by changing the concourse pipeline.
+
+1. Open the `concourse/pipeline.yml` in the appropriate environment. IS THIS TRUE? WHERE IS THE ENV VAR?
+1. Change `ENABLE_REGISTRATION` environment variable from `true` to `false`.
+
+When you push your change to the main branch, the pipeline change and application are deployed automatically.
+
+If you cannot change the pipeline (for example if you are doing this out of hours), you can use the GOV.UK PaaS CLI to set the environment variable.
+
+1. Sign into the PaaS.
+1. Run the following in the command line to set the environment variable to `false`:
+
+    ```
+    cf set-env govuk-account-manager ENABLE_REGISTRATION false
+    ```
+1. Restage the GOV.UK account manager prototype app:
+
+    ```
+    cf restage govuk-account-manager
+    ```
+
+This approach will cause some brief downtime as the app restarts, and the environment variable change will be lost on the next Concourse deployment.
