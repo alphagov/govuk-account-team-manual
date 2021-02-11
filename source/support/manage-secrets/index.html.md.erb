@@ -47,27 +47,39 @@ the `BEARER_TOKEN` environment variable:
 
 ## List secrets
 
-To list secrets with names and values used by the GOV.UK account manager app, run the following in the gds-cli:
+1. Sign into the GOV.UK London PaaS by running the following in the gds-cli:
 
-```
-cf env govuk-account-manager
-```
+    ```
+    cf login -a api.london.cloud.service.gov.uk --sso
+    ```
 
-To list the names of the secrets used by all GOV.UK tools, run the following:
+1. Sign into Concourse:
 
-```
-gds cd secrets ls cd-govuk-tools
-```
+    ```
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
+    ```
+
+1. To list secrets with names and values used by the GOV.UK account manager app, run the following in the gds-cli:
+
+    ```
+    cf env govuk-account-manager
+    ```
+
+1. To list the names of the secrets used by all GOV.UK tools, run the following:
+
+    ```
+    gds cd secrets ls cd-govuk-tools
+    ```
 
 [the daily statistics task]: https://github.com/alphagov/govuk-account-manager-prototype/blob/7e69b8cb8daec1e6e23d32374df3f8a1fa45b477/concourse/pipeline.yml#L249-L271
 [GOV.UK Notify API key]: https://github.com/alphagov/govuk-account-manager-prototype/blob/5443585c3d2dd5d399efc18f126f0bdf831036b5/concourse/tasks/deploy-to-govuk-paas.yml#L59
 
 ## Add or change a secret
 
-1. Sign into the GOV.UK London PaaS by running the following in the gds-cli:
+1. Sign into Concourse:
 
     ```
-    cf login -a api.london.cloud.service.gov.uk --sso
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
     ```
 
 1. Add a new secret or change an existing secret by running the following:
@@ -82,6 +94,12 @@ gds cd secrets ls cd-govuk-tools
 
     ```
     cf login -a api.london.cloud.service.gov.uk --sso
+    ```
+
+1. Sign into Concourse:
+
+    ```
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
     ```
 
 1. Remove a secret by running the following:
@@ -104,6 +122,12 @@ If a secret is compromised, this is a security incident. Follow [the
 incident management process][] as well as rotating the secret.
 
 [the incident management process]: /incident
+
+1. Sign into Concourse:
+
+    ```
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
+    ```
 
 1. Generate a new secret value, which varies per secret.
 
