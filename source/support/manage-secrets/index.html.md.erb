@@ -1,7 +1,7 @@
 ---
 title: Manage secrets
 weight: 35
-last_reviewed_on: 2021-01-19
+last_reviewed_on: 2021-02-11
 review_in: 6 months
 ---
 
@@ -12,7 +12,7 @@ You can add, remove or rotate secrets as necessary.
 This content explains:
 
 - how secrets are stored and used in Concourse
-- what secrets we have
+- how to list secrets
 - how to add, remove and rotate secrets
 
 ## Prerequisites
@@ -45,16 +45,18 @@ the `BEARER_TOKEN` environment variable:
     BEARER_TOKEN: ((report-bearer-token))
 ```
 
-To list all secrets for the GOV.UK Concourse team, run the following in the gds-cli:
+## List secrets
 
-```
-$ gds cd secrets ls cd-govuk-tools
-```
-
-To view live secrets, run the following in the gds-cli:
+To list secrets with names and values used by the GOV.UK account manager app, run the following in the gds-cli:
 
 ```
 cf env govuk-account-manager
+```
+
+To list the names of the secrets used by all GOV.UK tools, run the following:
+
+```
+gds cd secrets ls cd-govuk-tools
 ```
 
 [the daily statistics task]: https://github.com/alphagov/govuk-account-manager-prototype/blob/7e69b8cb8daec1e6e23d32374df3f8a1fa45b477/concourse/pipeline.yml#L249-L271
@@ -71,7 +73,7 @@ cf env govuk-account-manager
 1. Add a new secret or change an existing secret by running the following:
 
     ```
-    gds cd secrets add cd-govuk-tools govuk-account-manager-prototype/<secret-name> <secret-value>
+    gds cd secrets add cd-govuk-tools govuk-account-manager-prototype/<secret-name> "<secret-value>"
     ```
 
 ## Remove a secret
@@ -85,13 +87,13 @@ cf env govuk-account-manager
 1. Remove a secret by running the following:
 
     ```
-    gds cd secrets rm cd-govuk-tools govuk-account-manager-prototype/SECRET_NAME
+    gds cd secrets rm cd-govuk-tools govuk-account-manager-prototype/<secret-name>
     ```
 
 1. Unset the secret from the PaaS environment:
 
     ```
-    cf unset-env govuk-account-manager SECRET_NAME
+    cf unset-env govuk-account-manager <secret-name>
     ```
 
 ## Rotate a secret
@@ -108,7 +110,7 @@ incident management process][] as well as rotating the secret.
 2. Set the new value using the gds-cli:
 
     ```
-    $ gds cd secrets add cd-govuk-tools <pipeline-name>/<secret-name> "<value>"
+    gds cd secrets add cd-govuk-tools <pipeline-name>/<secret-name> "<secret-value>"
     ```
 
 3. If this is a secret used by an app, deploy the app.
