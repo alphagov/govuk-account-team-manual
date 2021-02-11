@@ -1,25 +1,19 @@
 ---
-title: Rotate a secret
+title: Manage secrets
 weight: 35
-last_reviewed_on: 2021-01-19
+last_reviewed_on: 2021-02-11
 review_in: 6 months
 ---
 
-# Rotate a secret
+# Manage secrets
 
-If a secret expires or is compromised, you will need to rotate it.
-This is a currently a manual process.
+You can add, remove or rotate secrets as necessary.
 
 This content explains:
 
-- how secrets are used
-- what secrets we have
-- how to rotate secrets if needed
-
-If a secret is compromised, this is a security incident. Follow [the
-incident management process][] as well as rotating the secret.
-
-[the incident management process]: /incident
+- how secrets are stored and used in Concourse
+- how to list secrets
+- how to add, remove and rotate secrets
 
 ## Prerequisites
 
@@ -27,7 +21,7 @@ You must have production access and [install the gds-cli tool][] to manage secre
 
 [install the gds-cli tool]: https://github.com/alphagov/gds-cli#installation
 
-## Concourse secrets
+## How secrets are stored and used in Concourse
 
 All of our secrets are used by our Concourse pipelines, and are stored
 as Concourse secrets.
@@ -51,44 +45,117 @@ the `BEARER_TOKEN` environment variable:
     BEARER_TOKEN: ((report-bearer-token))
 ```
 
-To list all secrets for the GOV.UK Concourse team, run the following in the gds-cli:
+## List secrets
 
-```
-$ gds cd secrets ls cd-govuk-tools
-```
+1. Sign into the GOV.UK London PaaS by running the following in the gds-cli:
+
+    ```
+    cf login -a api.london.cloud.service.gov.uk --sso
+    ```
+
+1. Sign into Concourse:
+
+    ```
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
+    ```
+
+1. To list secrets with names and values used by the GOV.UK account manager app, run the following in the gds-cli:
+
+    ```
+    cf env govuk-account-manager
+    ```
+
+1. To list the names of the secrets used by all GOV.UK tools, run the following:
+
+    ```
+    gds cd secrets ls cd-govuk-tools
+    ```
 
 [the daily statistics task]: https://github.com/alphagov/govuk-account-manager-prototype/blob/7e69b8cb8daec1e6e23d32374df3f8a1fa45b477/concourse/pipeline.yml#L249-L271
 [GOV.UK Notify API key]: https://github.com/alphagov/govuk-account-manager-prototype/blob/5443585c3d2dd5d399efc18f126f0bdf831036b5/concourse/tasks/deploy-to-govuk-paas.yml#L59
 
-## Rotating a secret
+## Add or change a secret
+
+1. Sign into Concourse:
+
+    ```
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
+    ```
+
+1. Add a new secret or change an existing secret by running the following:
+
+    ```
+    gds cd secrets add cd-govuk-tools govuk-account-manager-prototype/<secret-name> "<secret-value>"
+    ```
+
+## Remove a secret
+
+1. Sign into the GOV.UK London PaaS by running the following in the gds-cli:
+
+    ```
+    cf login -a api.london.cloud.service.gov.uk --sso
+    ```
+
+1. Sign into Concourse:
+
+    ```
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
+    ```
+
+1. Remove a secret by running the following:
+
+    ```
+    gds cd secrets rm cd-govuk-tools govuk-account-manager-prototype/<secret-name>
+    ```
+
+1. Unset the secret from the PaaS environment:
+
+    ```
+    cf unset-env govuk-account-manager <secret-name>
+    ```
+
+## Rotate a secret
+
+If a secret expires or is compromised, you will need to rotate it. This is a currently a manual process.
+
+If a secret is compromised, this is a security incident. Follow [the
+incident management process][] as well as rotating the secret.
+
+[the incident management process]: /incident
+
+1. Sign into Concourse:
+
+    ```
+    fly login -t cd-govuk-tools -c https://cd.gds-reliability.engineering -n govuk-tools
+    ```
 
 1. Generate a new secret value, which varies per secret.
 
 2. Set the new value using the gds-cli:
 
     ```
-    $ gds cd secrets add cd-govuk-tools <pipeline-name>/<secret-name> "<value>"
+    gds cd secrets add cd-govuk-tools <pipeline-name>/<secret-name> "<secret-value>"
     ```
 
 3. If this is a secret used by an app, deploy the app.
 
-## How to generate new secret values
+### Generate new secret values
 
-### Secrets used by multiple pipelines
+#### Secrets used by multiple pipelines
 
-#### `grafana-api-key`
+##### `grafana-api-key`
 
 Generate a new API key in [Grafana][], and deactivate the old API key.
 
 [Grafana]: https://grafana-paas.cloudapps.digital/org/apikeys
 
-#### `paas-username` and `paas-password`
+##### `paas-username` and `paas-password`
 
 Change the password by [triggering a password reset][], which gets sent to the govuk-accounts-developers Google Group.
 
 [triggering a password reset]: https://admin.london.cloud.service.gov.uk/password/request-reset
 
-#### `sentry-dsn`
+##### `sentry-dsn`
 
 Generate a new DSN from the Sentry project settings page, which you
 can reach by:
@@ -99,35 +166,35 @@ can reach by:
 
 [GOV.UK Sentry organisation]: https://sentry.io/organizations/govuk
 
-#### `slack_webhook_url`
+##### `slack_webhook_url`
 
 Tell IT Support, through the [Web Helpdesk][], that our Slack webhook
 has been leaked, and that we need a new one.
 
 [Web Helpdesk]: https://gdshelpdesk.digital.cabinet-office.gov.uk
 
-### Secrets used by the account manager
+#### Secrets used by the account manager
 
-#### `basic-auth-username` and `basic-auth-password`
+##### `basic-auth-username` and `basic-auth-password`
 
 These are arbitrary strings. After changing them, update the
 "deployed applications" Trello card.
 
-#### `bigquery-credentials-production`
+##### `bigquery-credentials-production`
 
 Generate new JSON credentials in the [Google Cloud Console][], and
 deactivate the old credentials.
 
 [Google Cloud Console]: https://console.cloud.google.com/iam-admin/serviceaccounts?orgonly=true&project=govuk-account-analysis-db&supportedpurview=project
 
-#### `notify-api-key-production` and `notify-api-key-staging`
+##### `notify-api-key-production` and `notify-api-key-staging`
 
 Generate a new API key from [GOV.UK Notify][], and deactivate the old
 API key.
 
 [GOV.UK Notify]: https://www.notifications.service.gov.uk/
 
-#### `oidc-pepper-production` and `oidc-pepper-staging`
+##### `oidc-pepper-production` and `oidc-pepper-staging`
 
 Generate an arbitrary string using `rake secret`.
 
@@ -141,11 +208,11 @@ services, so that they can migrate their data.
 
 [generate subject identifiers]: https://github.com/alphagov/govuk-account-manager-prototype/blob/7e69b8cb8daec1e6e23d32374df3f8a1fa45b477/config/initializers/doorkeeper_openid_connect.rb#L34-L36
 
-#### `oidc-signing-key-production` and `oidc-signing-key-staging`
+##### `oidc-signing-key-production` and `oidc-signing-key-staging`
 
 Generate a new RSA private key.
 
-#### `password-pepper-production` and `password-pepper-staging`
+##### `password-pepper-production` and `password-pepper-staging`
 
 Generate an arbitrary string using `rake secret`.
 
@@ -161,26 +228,26 @@ This is a feature which would need to be implemented.
 
 [hash account passwords]: https://github.com/alphagov/govuk-account-manager-prototype/blob/7e69b8cb8daec1e6e23d32374df3f8a1fa45b477/config/initializers/devise.rb#L128-L129
 
-#### `report-bearer-token-production`
+##### `report-bearer-token-production`
 
 Generate a new OAuth token in the Account Manager with the
 `reporting_access` scope, and expire the old token.
 
-#### `secret-key-base-production` and `secret-key-base-staging`
+##### `secret-key-base-production` and `secret-key-base-staging`
 
 Generate an arbitrary string with `rake secret`.
 
 This secret is used to sign session cookies, and so rotating it will
 log out all users.
 
-#### `zendesk-api-username` and `zendesk-api-key`
+##### `zendesk-api-username` and `zendesk-api-key`
 
 Tell User Support, in the `#user-support` Slack channel, that our
 Zendesk credentials have been leaked, and that we need new ones.
 
-### Secrets used by the attribute service
+#### Secrets used by the attribute service
 
-#### `account-manager-token-production` and `account-manager-token-staging`
+##### `account-manager-token-production` and `account-manager-token-staging`
 
 Generate a new OAuth token in the Account Manager with the
 `deanonymise_tokens` scope, and expire the old token.
