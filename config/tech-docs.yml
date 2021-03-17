@@ -10,9 +10,9 @@ phase: Beta
 # Links to show on right-hand-side of header
 header_links:
   About: /
-  Get Started: /
-  Documentation: /
-  Support: /
+  Get Started: /new-starter/#new-starter-guide
+  Documentation: https://docs.account.publishing.service.gov.uk/
+  Support: /support/#support
 footer_links:
   Team Manual Accessibility: /accessibility.html
 
