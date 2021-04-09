@@ -204,36 +204,6 @@ See also the following [continuous deployment documentation](#notes-on-continuou
 
 See the [documentation on suspending GOV.UK Account](/support/toggle-accounts/#suspend-and-resume-gov-uk-account) for more information.
 
-### I need to turn off the Transition Checker integration
-
-The accounts functionality on GOV.UK is enabled by 2 feature flags,
-set in puppet.
-
-Set these to false to disable the integration:
-
-```yaml
-govuk::apps::collections::feature_flag_accounts: false
-govuk::apps::finder_frontend::feature_flag_accounts: false
-```
-
-Then deploy Puppet.
-
-You can manually run Puppet on all the `frontend` and
-`calculators_frontend` machines if you don't want to wait for the
-normal run:
-
-```bash
-GOVUK_ENV=production
-
-for GOVUK_CLASS in frontend calculators_frontend; do
-  n=0
-  for node in $(gds govuk connect ssh -e "$GOVUK_ENV" aws/jumpbox -- govuk_node_list -c "$GOVUK_CLASS"); do
-    n=$((n+1))
-    gds govuk connect ssh -e "$GOVUK_ENV" "aws/${GOVUK_CLASS}:${n}" -- govuk_puppet --verbose
-  done
-done
-```
-
 ## Notes on continuous deployment
 
 Our applications are continuously deployed via [Concourse][cd]:
