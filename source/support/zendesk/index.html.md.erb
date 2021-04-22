@@ -113,6 +113,53 @@ If the user wants to update their email, phone number or password:
 1. Use the [__GOV.UK Account - Changing details (email or phone)__ macro](#gov-uk-account-changing-details-email-or-phone).
 1. Submit the ticket as solved.
 
+Sometimes we get tickets from users who want to change their details or their password.
+
+#### If the user wants to update their email or password
+
+1. Use the [__GOV.UK Account - Changing details (email or phone)__ macro](#gov-uk-account-changing-details-email-or-phone).
+1. Submit the ticket as solved.
+
+#### If the user wants to update their phone number
+
+First ask the user if they still have access to the number they used when they created the account.
+
+The guidance we need to give depends on how they answer this question.
+
+Begin by saying something like:
+
+“Hello
+
+Thanks for your message.
+
+The safest thing would be for you to update the phone number on your GOV.UK account yourself.
+
+To do this you need to be able to sign in to your account. This means you need to have access to the phone number you used when you created the account, as that's the number the system will use to send you the security code when you try to sign in.
+
+Is there any chance you still have access to your old number? For example, do you have your old sim card?
+
+Best wishes”
+
+If the user replies to say they do have access to their old number, explain they need to sign in to their account (the security code will be sent to their old number).
+
+Once they’re in the account, they need to go to __Manage my account__ and they will see the option for changing their phone number.
+
+If the user does not have access to their old number, it’s a little more complicated because we should not be changing people’s phone numbers for them for security reasons. You need to:
+
+1. Ask a developer to find a link to the user’s Brexit checker results (Michael and Huw know how to do this)
+
+1. Reply to the user with the following message:
+
+    “Hello
+
+    Unfortunately I cannot change the number for your GOV.UK account for security reasons. The only solution is for my team to delete your GOV.UK account entirely and for you to create the account again using your new phone number.
+
+    One thing I can do is share the list of Brexit actions saved in your existing account with you. This link will carry on working even if we delete your account and you create a new one: [add link]
+
+    Please can you confirm whether you’d like me to go ahead and delete the account so you can create it again with the right number?
+
+    Best wishes”
+
 ### If the ticket is about the Brexit checker
 
 This process is still to be confirmed.
@@ -143,6 +190,70 @@ In this case, we solve the ticket but do not notify the user that we’ve done t
 1. Add the __do_not_email__ and __do_not_reply__ tags to the ticket.
 1. Add an internal note that says: "The message in this ticket isn’t meaningful. There is no action for us."
 1. Submit as __solved__.
+
+### If the ticket is from a user who wants to delete their account
+
+We have a legal obligation to delete the account and data of anyone who requests this.
+
+When this happens, first check that the user definitely has a GOV.UK account. Post in the #govuk-accounts-tech slack channel and ask a developer to check this.
+
+If the user has a GOV.UK account, explain that they can delete their account themselves. You can use a message along the lines of:
+
+“Hello
+
+Thank you for your message.
+
+You can delete your GOV.UK account and all the information stored in it yourself. Here's what you need to do:
+
+1. To delete your account, you first need to sign in to your account here: https://www.account.publishing.service.gov.uk/sign-in
+
+    If you cannot sign in because you’re having password issues, you can reset your password by following the instructions here: https://www.account.publishing.service.gov.uk/account/password/reset. Once you’ve reset your password, sign in.
+
+2. Once you’ve signed in, you need to go to the ‘Manage your account’ section of your account.
+
+3. Scroll to the bottom and select the ‘Delete this GOV.UK account’ link.
+
+4. Enter your password and select the red ‘Delete account’ button.
+
+Once you’ve done this, you will be completely removed from the GOV.UK account system.
+
+Please note that this will not stop email notifications you're getting about changes to content on the GOV.UK website - it will only stop notifications about your GOV.UK account.
+
+If you also want to stop getting emails about updates to content, you can unsubscribe from those here: https://www.gov.uk/email/manage/authenticate
+
+I hope this helps, but please let us know if you have any questions or issues. I will leave this ticket open for now.
+
+Best wishes”
+
+If after a couple of weeks the user has not deleted their account, then we should reply to say we’re going to delete it. Give them a day to respond (just in case they’ve changed their mind). Here’s a message you can use for this:
+
+“Hello
+
+We’ve noticed that you have not deleted your GOV.UK account, so we'll go ahead and delete it for you as requested.
+
+Your GOV.UK account and all the data stored in it will be deleted tomorrow (date).
+
+Please bear in mind that this will not affect:
+
+- email notifications you're currently getting about changes to information on the GOV.UK website - if you want to stop receiving these notifications, you can unsubscribe here: https://www.gov.uk/email/manage/authenticate
+
+- any other government accounts you may have set up in addition to your GOV.UK account (for example Government Gateway, Universal Credit, or Personal Tax Account) - you’ll need to delete those accounts separately
+
+We’ll get back in touch when your GOV.UK account has been deleted.
+
+Best wishes”
+
+Once you’ve deleted the account, confirm this with the user and solve the ticket:
+
+“Hello
+
+Your GOV.UK account and all the information stored in it have now been deleted.
+
+Please be aware this has not affected your subscription to Brexit-related email notifications. If you want to stop getting email notifications when information on GOV.UK changes, you can ask to unsubscribe here: https://www.gov.uk/email/manage/authenticate
+
+I am going to close this ticket now, but you can reopen it by replying to this email if you have any other questions or if you need any more support.
+
+Best wishes”
 
 ## Solve pending tickets
 
@@ -191,7 +302,7 @@ Use this macro to close __pending__ tickets that have not been updated in 5 work
 
 This macro explains what the user needs to do to update their account.
 
-Use this macro when dealing with tickets where a user asks us to update their details.
+Use this macro when dealing with tickets where a user asks us to update their email or password.
 
 ### GOV.UK Account: Thanking user for additional feedback
 
@@ -257,34 +368,6 @@ The good thing is that you don't need an account to access any government servic
 To do this, you need to go through the questions in the [Brexit checker](https://www.gov.uk/transition-check/questions). At the end you'll get a results page that lists all the things you need to do for Brexit based on your circumstances. You can then select the link to set up email updates.
 
 You'll be given 2 options: To subscribe to email updates or to create an account. Select the link for subscribing to email updates and you'll be guided through the process.
-
-### If a user wants us to delete a GOV.UK account
-
-Thank you for your message and sorry to hear you're having trouble with your account.
-
-You've reached the GOV.UK Account team - we are the team responsible for maintaining the GOV.UK Account. The GOV.UK Account is the one that you can currently use to save your answers from the Brexit checker (https://www.gov.uk/transition-check/questions). The Brexit checker helps you work out what you need to do differently now that the UK has left the EU.
-
-Is this the account that you would like to delete? If so I can help. I have included detailed instructions for how you can delete your account.
-
-But if you were thinking of a different government account (for example Government Gateway, Universal Credit, Personal Tax Account), please can you let me know what service you were trying to use or what you were trying to do? Or if it's easier, you can share the link of the account you were trying to access with me. I will then try to help direct you to the right place.
-
-**How to delete your GOV.UK account**
-
-Step 1: To delete your account, you first need to sign in to your account here: https://www.account.publishing.service.gov.uk/sign-in
-
-If you cannot sign in because you're having password issues, you can reset your password by following the instructions here: https://www.account.publishing.service.gov.uk/account/password/reset
-
-Once you've reset your password, sign in.
-
-Step 2: Once you've signed in, you need to go to the 'Manage your account' section of your account.
-
-Step 3: Scroll to the bottom and select the 'Delete this GOV.UK account' link.
-
-Step 4: Enter your password and select the red 'Delete account' button.
-
-Once you've done this, you will be completely removed from the GOV.UK account system.
-
-I hope this helps. I will leave this ticket open so you can reply to this email to let me know how you got on.
 
 ### If a user wants to update their Brexit checker results
 
