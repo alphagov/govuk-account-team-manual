@@ -1,7 +1,7 @@
 ---
 title: Data Protection for GOV.UK Account users
 weight: 36
-last_reviewed_on: 2021-02-02
+last_reviewed_on: 2021-11-03
 review_in: 6 months
 ---
 
@@ -12,166 +12,26 @@ Users make requests to exercise those rights and we have responsibilities to res
 
 This guidance describes some scenarios we must be prepared for, along with information on responsibilities between teams.
 
-Responding to requests may involve the GOV.UK Accounts team, GOV.UK User Support and the GDS Privacy Office.
+Responding to requests may involve the GDS Digital Identity Program, GOV.UK Accounts team, GOV.UK User Support and the GDS Privacy Office.
 
 This guide is not a complete list of everything we must do under the UK GDPR. Instead it focuses on user rights
 requests and how to respond.
 
 ## Who handles requests
 
-Responding to rights requests is a collaboration between the Privacy Office, the User Support team and the GOV.UK Accounts team.
-Most requests will come through Zendesk where the request can be flagged by User Support.
+Before October 2021 the a large part of work around rights requests was handled by the GOV.UK Accounts team.
 
-If a request comes directly to the GOV.UK Accounts team, for example by email, the GOV.UK Accounts team must create a new Zendesk ticket, including:
+Since then we have migrated data to the GDS Digital Identity programme's Single Sign On (SSO) product.
 
-- contact details for the user who has made the request
-- what the request is
-- when the request came to the GOV.UK Accounts team
+Digital Identity's SSO is now the canonical source for user data, as well as the point at which we should initiate any deletion requests.
 
-The GOV.UK Accounts team should also tag the ticket with `govuk_account_gdpr_request`
+GDPR requests recieved by User Support, the GDS Privacy office or GOV.UK 2ndline should now be forwarded to the Digital Identity zendesk queue `GOV.UK Sign In`
 
-The team can then assign the ticket to `3rd Line--GDS Privacy`.
+## GOV.UK accounts team
 
-The Privacy Office will review the request and work with User Support to ensure it is valid.
+In rarer cases the GOV.UK accounts team may need to assist Digital Identity in meeting some rights requests.
 
-## Time limits
+Where a partial restriction, or selective delete request is proposed that applies to GOV.UK Account data, developers on the team may need to intervene.
 
-GOV.UK has 30 days to respond to any rights request. This includes non-working days such as bank holidays or weekends.
-
-When the GOV.UK Accounts team receives a request, we must assign it to User Support as soon as we see it.
-
-If User Support asks the GOV.UK Accounts team to provide information or take an action as part of a rights request, we must respond to User Support within 7 days.
-
-## Self-service
-
-The GOV.UK Account is designed to give users the maximum possible control over their data. Many of the rights given to them by GDPR are things they can manage themselves through their account. For example, a user can delete their own account.
-
-We have [prepared responses to common issues][common-issues] that User Support can use to point users in the right direction. In most cases that will be enough to meet our obligations.
-
-However, if a user tells us they are unwilling to use their account, or a part of their request is not something they can do by themselves, then we will need to pick up their request.
-
-## Types of requests
-
-Users could ask to:
-
-- access data
-- erase data
-- amend data
-- restrict processing
-- raise an objection
-- opt out of automated decision making or profiling
-
-This section describes the rights users have and the actions we may have to take to respond to them.
-
-### Requests to access data (also known as Subject Access Requests)
-
-A user with an account has a right to see information about them held on the system. This can help a user better understand how their data is being used, and provide a way to check we are
-meeting promises we made in the [govuk-accounts-privacy-policy][privacy-notice].
-
-User Support may first get in contact to ask if we hold data for a particular person. The user may be identified by an email address or another piece of data we hold on the system.
-
-When User Support contact us we should:
-
-1. Confirm to User Support the request is being processed.
-1. Open a new Trello ticket using the [access request template][trello-sar-template].
-1. Assign a developer to confirm if we hold data on that user.
-1. Respond to User Support confirming if we hold data within 3 days.
-
-If we do hold data, User Support may ask if we can export it for a user. The User Support or Privacy Office teams will agree a format and scope.
-
-If the request returns, reassign the ticket to a developer and ask them to export the data.
-
-When asked by User Support to provide a user's data, we must respond to them with the data within 7 days.
-
-### Requests to erase data
-
-Users may request that we delete a portion of their account or remove their account entirely. This is not an absolute right. There may be some circumstances when we may refuse to completely remove data. The Privacy Office will be able to advise in those circumstances.
-
-When a user wishes to delete their entire account, User Support will initially respond with our [planned response on how to delete your account][planned-response-delete].
-
-If a user does not want to sign in to delete their account, User Support will contact the GOV.UK Accounts team.
-
-When User Support contact us we should:
-
-1. Confirm to User Support the request is being processed.
-1. Open a new Trello ticket using the [manual erasure template][trello-delete-template].
-1. Assign a developer to delete the account.
-1. Confirm to User Support that we have deleted the data within 7 days.
-
-We are only responsible for data held in accounts. Data such as email subscriptions will be handled by other teams within GOV.UK.
-
-Users also have a right to have just a portion of their data deleted. If a user requests this and does not want their account to be deleted, we should discuss an appropriate response as a team and update this guide then.
-
-Now, all data on the account is either essential to make it work (for example multi-factor authentication data, email address), or is the central reason to use an account (for example Brexit checker results).
-
-Security events will not be removed during this process, however we will no longer be able to identify a user from the event data.
-
-### Request to amend data
-
-Users may request that we correct or change a piece of data. This is not an absolute right. There may be some circumstances when we may refuse to completely remove data. The Privacy Office will be able to advise in those circumstances.
-
-In most cases, users will be able to do so themselves.
-
-When a user wants to amend their Brexit checker results, User Support will respond with [planned response on how to amend your checker results][planned-response-amend].
-
-If a user does not want to sign in to amend their checker data, User Support will contact the GOV.UK Accounts team. The team must decide if it is reasonable to amend this data. If we do not think it's reasonable, we should start a discussion with the Privacy Office about how best to respond.
-
-If we have agreed to amend the data:
-
-1. Confirm to User Support the request is being processed.
-1. Open a new Trello ticket using the [manual amendment template][trello-amendment-template].
-1. Assign a developer to amend the data.
-1. Confirm to User Support that we have amended the data within 7 days.
-
-When we hold more data on a user, and especially if an inaccuracy could lead to harm or have a negative impact, amendments as a right to accuracy will become more important.
-
-### Request restricted processing
-
-A user has a right to request that we are restricted in how we use and process their data. It is a right that only applies in certain circumstances, and may often be bundled with a request to amend, erase or after viewing data.
-
-The Information Commisioner's Office (ICO) [provides some example circumstances when this may be relevant][ico-restriction-guidance].
-
-The GOV.UK Accounts team must be aware of this right, and ensure that any requests to modify or restrict the use of a user's data is flagged to the Privacy Office, who can advise on next steps.
-
-If a restriction of data is agreed to by the Privacy Office, the GOV.UK Accounts team will need to ensure that the User's data is not processed or used in any way without:
-- the consent of the user
-- a specific exemption informed by the Privacy Office
-
-Restrictions are often temporary, and may be lifted with the agreement of the user or the Privacy Office.
-
-When lifted a user's account may be treated in the same way as another account again.
-
-### Request to raise an objection
-
-A user has a right to understand how their data is being used. If a user believes we are breaking the law, the user has the right to object.
-
-An objection must always be raised with the Privacy Office through User Support.
-
-The Privacy Office data protection officer may contact the GOV.UK Accounts team to ask questions about our practices to help them prepare their response.
-
-## Request to opt out of automated decision making or profiling
-
-Users also gain specific rights when:
-
-- decisions are taken automatically without any human involvement based on their data
-- we do automated profiling (evaluating their data to categorise or evaluate information about a user)
-
-In some cases we may be asked to stop this process for a user, which will be treated as a restriction.
-
-There are exemptions and exceptions to this right based on circumstances. If we become aware of any requests to opt out of profiling or automated decision making, we must meet with the Privacy Office to evaluate what actions the team will take.
-
-### Other rights
-
-GDPR also protects other rights, such as the right to be informed or data portability.
-These are generally provided by other parts of our service design or by particular features.
-
-If a user raises a request citing rights that are not covered in this guidance, it is best to confirm if the right applies with the Privacy Office.
-
-[common-issues]: /support/zendesk#prepared-responses-to-common-issues
-[planned-response-delete]: /support/zendesk#if-a-user-wants-us-to-delete-a-gov-uk-account
-[planned-response-amend]: /support/zendesk/#if-a-user-wants-to-update-their-brexit-checker-results
-[trello-sar-template]: https://trello.com/c/6v13OwA3/625-gdpr-subject-access-request
-[trello-delete-template]: https://trello.com/c/AneBs9tU/624-gdpr-deletion-request
-[trello-amendment-template]: https://trello.com/c/zBQTmC70/626-gdpr-amendment-request
-[ico-restriction-guidance]: https://ico.org.uk/for-organisations/guide-to-data-protection/guide-to-the-general-data-protection-regulation-gdpr/individual-rights/right-to-restrict-processing/#ib2
-[privacy-notice]: https://www.gov.uk/government/publications/govuk-accounts-trial-full-privacy-notice-and-accessibility-statement/govuk-accounts-trial-full-privacy-notice
+Additionally the GOV.UK Account team may need to provide any information that is not visible to Digital Identity during a Subject Access Request.
+However Digital Identity should be the first point of contact as they can perform basic checks around if a user has an account or not, before moving on to fulfill any request.
